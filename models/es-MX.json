@@ -46,9 +46,28 @@
                                 "el doctor se llama {nombre_doctor}",
                                 "el medico se llama {nombre_doctor}"
                             ]
+                        },
+                        {
+                            "name": "especialidad",
+                            "type": "especialidad",
+                            "samples": [
+                                "El doctor es de {especialidad}",
+                                "{especialidad}",
+                                "la especialidad es {especialidad}"
+                            ]
+                        },
+                        {
+                            "name": "ubicacion",
+                            "type": "AMAZON.City",
+                            "samples": [
+                                "en {ubicacion}",
+                                "es en {ubicacion}",
+                                "{ubicacion}"
+                            ]
                         }
                     ],
                     "samples": [
+                        "Agendar una hora médica",
                         "agendar hora con el doctor {nombre_doctor}",
                         "agendar doctor",
                         "agendar hora con el medico",
@@ -134,12 +153,69 @@
                     ]
                 }
             ],
-            "types": []
+            "types": [
+                {
+                    "name": "especialidad",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "Medicina general"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Gastroenterología"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Endocrinología"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Geriatría"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Oftalmología"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cirugía vascular"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Angiología"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Traumatología"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Urología"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Cardiología"
+                            }
+                        }
+                    ]
+                }
+            ]
         },
         "dialog": {
             "intents": [
                 {
                     "name": "DoctorAppointment",
+                    "delegationStrategy": "ALWAYS",
                     "confirmationRequired": true,
                     "prompts": {
                         "confirmation": "Confirm.Intent.1104413204243"
@@ -170,6 +246,24 @@
                             "elicitationRequired": true,
                             "prompts": {
                                 "elicitation": "Elicit.Slot.1104413204243.346611995698"
+                            }
+                        },
+                        {
+                            "name": "especialidad",
+                            "type": "especialidad",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.324910066518.262908579952"
+                            }
+                        },
+                        {
+                            "name": "ubicacion",
+                            "type": "AMAZON.City",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.324910066518.885865033275"
                             }
                         }
                     ]
@@ -330,7 +424,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Deseas agendar la hora con {nombre_doctor} el {dia} a las {hora} ?"
+                        "value": "Deseas agendar la hora de {especialidad} con {nombre_doctor} el {dia} a las {hora} ?"
                     }
                 ]
             },
@@ -349,6 +443,36 @@
                     {
                         "type": "PlainText",
                         "value": "Ok, mantén la calma, enviaré un SMS a tus contactos de emergencia, estás seguro?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.324910066518.262908579952",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Qué especialidad es la hora?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Cual es la especialidad del médico?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.324910066518.885865033275",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "en que lugar es ?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "donde tienes que ir al médico"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Donde es la cita médica?"
                     }
                 ]
             }

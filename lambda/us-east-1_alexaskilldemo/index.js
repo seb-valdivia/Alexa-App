@@ -1,5 +1,15 @@
 /* eslint-disable  func-names */
 /* eslint-disable  no-console */
+// import entire SDK
+var AWS = require('aws-sdk');
+// import AWS object without services
+var AWS = require('aws-sdk/global');
+// import individual service
+var S3 = require('aws-sdk/clients/s3');
+
+var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
+
+AWS.config.update({region: 'us-east-1'});
 
 const Alexa = require('ask-sdk-core');
 
@@ -27,14 +37,33 @@ const DoctorAppointmentIntentHandler = {
     const nombre_doctor = handlerInput.requestEnvelope.request.intent.slots.nombre_doctor.value;
     const dia = handlerInput.requestEnvelope.request.intent.slots.dia.value;
     const hora = handlerInput.requestEnvelope.request.intent.slots.hora.value;
-    const diassml = `<say-as interpret-as="date">${dia}</say-as>`
-    const speechText = 'Muy bien. tu hora con ' + `${nombre_doctor}` + ' del ' +`${diassml}` +' a las ' + `${hora}` +' ha sido agendada.';
-    
+    const especialidad = handlerInput.requestEnvelope.request.intent.slots.especialidad.value;
+    const ubicacion = handlerInput.requestEnvelope.request.intent.slots.ubicacion.value;
 
+    const diassml = `<say-as interpret-as="date">${dia}</say-as>`
+
+    var params = {
+      TableName: 'docsApp',
+      Item: {
+        'user_id' : {S: `${dia}-${nombre_doctor}`},
+        'fecha' : {S: `${dia}`},
+        'especialidad' : {S: `${especialidad}`},
+        'nombreMedico' : {S: `${nombre_doctor}`},
+        'hora' : {S: `${hora}`},
+        'ubicacion' : {S: `${ubicacion}`}
+      }
+    };
+    // Call DynamoDB to add the item to the table
+    ddb.putItem(params, function(err) {
+      if (err) {
+        console.log("Error", err);
+      }
+    });
+    const speechText = 'Muy bien. Ya está hecho, tu hora con ' + `${nombre_doctor}` + ' de ' + `${especialidad}` + ' del ' +`${diassml}` +' a las ' + `${hora}` +' ha sido agendada.';
     return handlerInput.responseBuilder
-      .speak(speechText)
-      .withSimpleCard('Info', speechText)
-      .getResponse();
+   .speak(speechText)
+   .withSimpleCard('Info', speechText)
+   .getResponse(); 
   },
 };
 
@@ -44,7 +73,23 @@ const DoctorWhenIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'DoctorWhen';
   },
   handle(handlerInput) {
-    const speechText = 'Tienes médico el miercoles a las 12:30 con Francisco Diaz';
+
+    var params = {
+      TableName: 'docsApp',
+      Key: {
+        'user_id': {S: '001'}
+      },
+    };
+    
+    // Call DynamoDB to read the item from the table
+    ddb.getItem(params, function(err, data) {
+      if (err) {
+        console.log("Error", err);
+      } else {
+        console.log("Success", data.Item);
+      }
+    });
+    const speechText = 'Muy bien. Ya está hecho, tu hora con ' + data.Item.nombreMedico.value + ' de ' + `${especialidad}` + ' del ' +`${diassml}` +' a las ' + `${hora}` +' ha sido agendada.';
 
     return handlerInput.responseBuilder
       .speak(speechText)
@@ -89,6 +134,23 @@ const SOSIntentHandler = {
   handle(handlerInput) {
   
     const speechText = "Hecho. He notificado a tus contactos de emergencia, pronto recibirás asistencia";
+    
+    var params = {
+      Message: '[MENSAJE AUTOMATIZADO DE EMERGENCIA] - Tu familiar ha realizado una solicitud de emergencia a través de mi Asistente. Asegúrate que se encuentra bien.', /* required */
+      PhoneNumber: '+56963924874',
+    };
+    
+    // Create promise and SNS service object
+    var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31'}).publish(params).promise();
+    
+    // Handle promise's fulfilled/rejected states
+    publishTextPromise.then(
+      function(data) {
+        console.log("MessageID is " + data.MessageId);
+      }).catch(
+        function(err) {
+        console.error(err, err.stack);
+      });
     
     return handlerInput.responseBuilder
       .speak(speechText)

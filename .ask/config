@@ -10,10 +10,10 @@
         },
         "interactionModel": {
           "es-ES": {
-            "eTag": "982fd204d6b11bc9a56fc8db6e9c49ee"
+            "eTag": "ecd74d0f45369c32d6c95bb01ab3aff1"
           },
           "es-MX": {
-            "eTag": "982fd204d6b11bc9a56fc8db6e9c49ee"
+            "eTag": "ecd74d0f45369c32d6c95bb01ab3aff1"
           }
         },
         "lambda": [
@@ -26,7 +26,7 @@
             "codeUri": "lambda/us-east-1_alexaskilldemo",
             "functionName": "alexaskilldemo",
             "handler": "index.handler",
-            "revisionId": "9a3b0d7f-6c35-499f-aa17-bfba47d42705",
+            "revisionId": "ad8a98e5-b4d1-4e82-b146-3c4ac16a7a45",
             "runtime": "nodejs8.10"
           }
         ]
