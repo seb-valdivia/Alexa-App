@@ -1,0 +1,357 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "mi asistente",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "DoctorAppointment",
+                    "slots": [
+                        {
+                            "name": "dia",
+                            "type": "AMAZON.DATE",
+                            "samples": [
+                                "tengo medico el {dia}",
+                                "tengo medico el {dia} a las {hora}",
+                                "es {dia}",
+                                "es el {dia}",
+                                "la cita es el {dia} a las {hora}"
+                            ]
+                        },
+                        {
+                            "name": "hora",
+                            "type": "AMAZON.TIME"
+                        },
+                        {
+                            "name": "nombre_doctor",
+                            "type": "AMAZON.FirstName",
+                            "samples": [
+                                "el nombre del medico es {nombre_doctor}",
+                                "{nombre_doctor}",
+                                "el doctor se llama {nombre_doctor}",
+                                "el medico se llama {nombre_doctor}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "agendar hora con el doctor {nombre_doctor}",
+                        "agendar doctor",
+                        "agendar hora con el medico",
+                        "ir al medico el {dia} a las {hora}",
+                        "visita a doctor {nombre_doctor} el {dia} a las {hora}",
+                        "hora con medico {nombre_doctor} el {dia} a las {hora}",
+                        "recordarme hora con el doctor {nombre_doctor} el {dia}",
+                        "Agendar doctor {nombre_doctor}",
+                        "Quiero agendar hora con medico"
+                    ]
+                },
+                {
+                    "name": "DoctorWhen",
+                    "slots": [
+                        {
+                            "name": "hora",
+                            "type": "AMAZON.TIME"
+                        },
+                        {
+                            "name": "dia",
+                            "type": "AMAZON.DATE"
+                        },
+                        {
+                            "name": "medico",
+                            "type": "AMAZON.FirstName"
+                        }
+                    ],
+                    "samples": [
+                        "cuando tengo que ir al doctor",
+                        "cuando tengo {medico} ",
+                        "que {dia} me toca medico",
+                        "a que {hora} me toca {medico}",
+                        "cuando hay que ir al doctor",
+                        "cuando tengo cita medica",
+                        "cuando tengo doctor",
+                        "Cuando me toca medico"
+                    ]
+                },
+                {
+                    "name": "ListIntents",
+                    "slots": [],
+                    "samples": [
+                        "Que puedo guardar",
+                        "Que puedo preguntar",
+                        "Que puedo agendar",
+                        "Que puedo hacer",
+                        "Lista de acciones"
+                    ]
+                },
+                {
+                    "name": "sos",
+                    "slots": [],
+                    "samples": [
+                        "no me puedo mover",
+                        "por favor ayuda",
+                        "necesito ayuda",
+                        "tuve un accidente",
+                        "Me siento mal"
+                    ]
+                },
+                {
+                    "name": "Meds",
+                    "slots": [],
+                    "samples": [
+                        "que me diga lista de medicamentos",
+                        "que me diga lista de pastillas",
+                        "dame mi lista de pastillas",
+                        "dime que pastillas debo tomar",
+                        "cuales son mis pildoras",
+                        "cuales son mis medicamentos",
+                        "que pastillas debo tomar",
+                        "cuales son mis pastillas",
+                        "Que medicamentos debo tomar"
+                    ]
+                },
+                {
+                    "name": "elevatorpitch",
+                    "slots": [],
+                    "samples": [
+                        "cuentame mi eleveitor pitch",
+                        "dime mi elevator pitch ",
+                        "elevator pitch "
+                    ]
+                }
+            ],
+            "types": []
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "DoctorAppointment",
+                    "confirmationRequired": true,
+                    "prompts": {
+                        "confirmation": "Confirm.Intent.1104413204243"
+                    },
+                    "slots": [
+                        {
+                            "name": "dia",
+                            "type": "AMAZON.DATE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1104413204243.1521587054999"
+                            }
+                        },
+                        {
+                            "name": "hora",
+                            "type": "AMAZON.TIME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1104413204243.956453864874"
+                            }
+                        },
+                        {
+                            "name": "nombre_doctor",
+                            "type": "AMAZON.FirstName",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1104413204243.346611995698"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "sos",
+                    "delegationStrategy": "ALWAYS",
+                    "confirmationRequired": true,
+                    "prompts": {
+                        "confirmation": "Confirm.Intent.696601680328"
+                    },
+                    "slots": []
+                },
+                {
+                    "name": "DoctorWhen",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "hora",
+                            "type": "AMAZON.TIME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "dia",
+                            "type": "AMAZON.DATE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "medico",
+                            "type": "AMAZON.FirstName",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.1138206205070.1001244713642",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "dime tu nombre"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "como te llamas"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "dime como te llamas"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Slot.668825100393.729259541585",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "OK,Entonces tu nombre es {nombre}"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.489061560760.820398322645.978053993596",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "mmmm, eso no pareciera ser un nombre valido,  puedes repetirlo?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Oops, eso no parece un nombre valido, dimelo nuevamente. "
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1104413204243.1521587054999",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "cuando te toca doctor?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "cuando te toca medico?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "cuando es el doctor?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "cuando es el medico?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "cuando tienes que ir al doctor?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Cuando tienes que ir al medico?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1104413204243.956453864874",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "a que hora?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "a que hora te atendera el doctor {nombre_doctor}"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "a que hora tienes cita con el medico?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "a que hora es el medico?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1104413204243.346611995698",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "como se llama el medico?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "cual es el nombre del doctor?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "como se llama el doctor?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "cual es el nombre del medico?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Intent.1104413204243",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Deseas agendar la hora con {nombre_doctor} el {dia} a las {hora} ?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Intent.645372189285",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Ok, mantén la calma, notificaré a tus contactos de emergencia, estas seguro ?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Intent.696601680328",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Ok, mantén la calma, enviaré un SMS a tus contactos de emergencia, estás seguro?"
+                    }
+                ]
+            }
+        ]
+    }
+}
